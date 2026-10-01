@@ -31,6 +31,10 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 
 /* Hero */
 .hero{position:relative}
+@media(min-width:701px){
+  .slides{cursor:grab;touch-action:pan-y}
+  .slides.arrastando{cursor:grabbing;user-select:none}
+}
 .slides{display:grid}
 .slide{grid-area:1/1;position:relative;opacity:0;visibility:hidden;transition:opacity .9s,visibility .9s}
 .slide.on{opacity:1;visibility:visible}
@@ -86,9 +90,9 @@ section h2{margin:0;font-size:1.35rem;letter-spacing:-.01em}
 .card{position:relative;display:flex;flex-direction:column;justify-content:flex-end;aspect-ratio:16/9;padding:1rem 1.1rem;border-radius:var(--r);overflow:hidden;background:var(--ameixa);isolation:isolate;transition:transform .25s,box-shadow .25s}
 .card>img{position:absolute;z-index:-2;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .45s ease}
 .card::after{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(180deg,rgba(20,8,15,.08) 22%,rgba(20,8,15,.48) 58%,rgba(20,8,15,.96) 100%)}
-.card .cat{position:absolute;top:.9rem;left:1.1rem;margin:0;color:#fff;opacity:.92;font-size:.8rem}
-.card h3{margin:0;font-size:1.2rem;line-height:1.2;letter-spacing:-.015em;text-wrap:balance;text-shadow:0 2px 12px rgba(0,0,0,.6)}
-.card .meta{margin:.35rem 0 0;font-size:.85rem;color:rgba(255,255,255,.82)}
+.card .cat{position:absolute;top:.9rem;left:1.1rem;margin:0;color:#fff;opacity:.92;font-size:.72rem}
+.card h3{margin:0;font-size:1rem;line-height:1.2;letter-spacing:-.015em;text-wrap:balance;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.card .meta{margin:.35rem 0 0;font-size:.78rem;color:rgba(255,255,255,.82)}
 .tile:hover,.card:hover{transform:scale(1.04);box-shadow:0 14px 40px rgba(0,0,0,.55)}
 .card:hover>img{transform:scale(1.045)}
 
