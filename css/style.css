@@ -31,13 +31,15 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 
 /* Hero */
 .hero{position:relative}
+.slides{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.slides::-webkit-scrollbar{display:none}
+.slide{position:relative;flex:0 0 100%;opacity:1;visibility:visible;scroll-snap-align:start;scroll-snap-stop:always}
+.slide.on{opacity:1;visibility:visible}
 @media(min-width:701px){
   .slides{cursor:grab;touch-action:pan-y}
-  .slides.arrastando{cursor:grabbing;user-select:none}
+  .slides.arrastando{cursor:grabbing;user-select:none;scroll-snap-type:none}
+  .slides.arrastando *{user-select:none}
 }
-.slides{display:grid}
-.slide{grid-area:1/1;position:relative;opacity:0;visibility:hidden;transition:opacity .9s,visibility .9s}
-.slide.on{opacity:1;visibility:visible}
 .slide>img{width:100%;aspect-ratio:16/9;min-height:520px;max-height:92vh;object-fit:cover;object-position:center 35%}
 .slide::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,var(--bg) 0,rgba(20,8,15,0) 45%),linear-gradient(90deg,rgba(20,8,15,.8),rgba(20,8,15,0) 62%)}
 .slide .tx{position:absolute;z-index:2;left:var(--pad);bottom:clamp(3rem,12vh,7rem);max-width:min(40rem,88%)}
@@ -72,9 +74,10 @@ section h2{margin:0;font-size:1.35rem;letter-spacing:-.01em}
 @media(hover:none){.setas{display:none}}
 .trilho{display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x proximity;padding:.5rem var(--pad) 1.5rem;scroll-padding:0 var(--pad);scrollbar-width:thin;scrollbar-color:var(--vinho) transparent}
 .trilho>*{flex:0 0 calc(20% - .8rem);min-width:0;scroll-snap-align:start}
-.tiles>*{flex-basis:calc(20% - .8rem)}
+.tiles{display:grid;grid-template-columns:repeat(5,clamp(220px,22vw,320px));grid-auto-flow:row;align-items:stretch;overflow-x:auto}
+.tiles>*{min-width:0;width:auto}
 @media(max-width:1000px) and (min-width:701px){
-  .trilho>*{flex-basis:calc(25% - .75rem)}
+  .trilho:not(.tiles)>*{flex-basis:calc(25% - .75rem)}
 }
 .grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;padding:.5rem var(--pad) 1rem}
 .vazio{padding:0 var(--pad);color:var(--tx2)}
@@ -118,14 +121,13 @@ footer p{margin:0}
 /* Celular */
 @media(max-width:700px){
   .topo nav{display:none}
-  .slides{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
-  .slides::-webkit-scrollbar{display:none}
-  .slide{grid-area:auto;flex:0 0 100%;opacity:1;visibility:visible;scroll-snap-align:start;scroll-snap-stop:always;transition:none}
+  .slide{transition:none}
   .slide>img{min-height:0;max-height:none}
   .slide::after{inset:0 0 auto;aspect-ratio:16/9;background:linear-gradient(0deg,var(--bg) 0,transparent 40%)}
   .slide .tx{position:relative;left:auto;bottom:auto;margin-top:-2.5rem;padding:0 var(--pad) 2.8rem;max-width:none}
   .pontos{right:auto;left:calc(var(--pad) - 4px);bottom:.5rem}
-  .trilho>*{flex-basis:min(82vw,320px)}
+  .trilho:not(.tiles)>*{flex-basis:min(82vw,320px)}
+  .tiles{grid-template-columns:repeat(5,minmax(210px,78vw))}
   dialog{border-radius:0;min-height:100dvh}
 }
 
