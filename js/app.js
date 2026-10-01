@@ -69,6 +69,31 @@ faixaSlides.addEventListener('scroll',()=>{
   },100);
 },{passive:true});
 faixaSlides.addEventListener('pointerdown',()=>{if(modoMobile.matches)pausa()},{passive:true});
+
+let inicioX=0,arrastando=false;
+faixaSlides.addEventListener('pointerdown',e=>{
+  if(modoMobile.matches||e.button!==0||e.target.closest('a,button,input'))return;
+  inicioX=e.clientX;
+  arrastando=true;
+  pausa();
+  faixaSlides.classList.add('arrastando');
+  faixaSlides.setPointerCapture?.(e.pointerId);
+});
+faixaSlides.addEventListener('pointerup',e=>{
+  if(!arrastando||modoMobile.matches)return;
+  const dx=e.clientX-inicioX;
+  arrastando=false;
+  faixaSlides.classList.remove('arrastando');
+  faixaSlides.releasePointerCapture?.(e.pointerId);
+  if(Math.abs(dx)>=60)ir(atual+(dx<0?1:-1));
+  auto();
+});
+faixaSlides.addEventListener('pointercancel',()=>{
+  if(!arrastando)return;
+  arrastando=false;
+  faixaSlides.classList.remove('arrastando');
+  auto();
+});
 modoMobile.addEventListener?.('change',()=>ir(atual));
 if(slides.length){ir(0);auto()}
 
