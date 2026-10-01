@@ -67,10 +67,10 @@ section h2{margin:0;font-size:1.35rem;letter-spacing:-.01em}
 .setas button:hover{background:rgba(255,255,255,.25)}
 @media(hover:none){.setas{display:none}}
 .trilho{display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x proximity;padding:.5rem var(--pad) 1.5rem;scroll-padding:0 var(--pad);scrollbar-width:thin;scrollbar-color:var(--vinho) transparent}
-.trilho>*{flex:0 0 calc((100vw - (2 * var(--pad)) - 4rem)/5);min-width:0;scroll-snap-align:start}
-.tiles>*{flex-basis:calc((100vw - (2 * var(--pad)) - 4rem)/5)}
+.trilho>*{flex:0 0 calc(20% - .8rem);min-width:0;scroll-snap-align:start}
+.tiles>*{flex-basis:calc(20% - .8rem)}
 @media(max-width:1000px) and (min-width:701px){
-  .trilho>*{flex-basis:calc((100vw - (2 * var(--pad)) - 3rem)/4)}
+  .trilho>*{flex-basis:calc(25% - .75rem)}
 }
 .grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;padding:.5rem var(--pad) 1rem}
 .vazio{padding:0 var(--pad);color:var(--tx2)}
