@@ -15,7 +15,7 @@ const rotulo=id=>salvo(id)?'✓ Na minha lista':'+ Minha lista';
 const btnSalvar=id=>`<button class="btn vidro" data-salvar="${id}" aria-pressed="${salvo(id)}">${rotulo(id)}</button>`;
 
 /* Cards e trilhos */
-const card=a=>{const c=cat(a.cat);return `<a class="card" href="#/artigo/${a.id}" style="--tom:${c.tom}"><p class="cat">${c.nome}</p><h3>${a.titulo}</h3><p class="meta">${mins(a)} min de leitura</p></a>`};
+const card=a=>{const c=cat(a.cat),capa=a.hero||c.capa;return `<a class="card" href="#/artigo/${a.id}" style="--tom:${c.tom}">${capa?`<img src="${img(capa)}-640.webp" width="640" height="360" alt="" loading="lazy">`:''}<p class="cat">${c.nome}</p><h3>${a.titulo}</h3><p class="meta">${mins(a)} min de leitura</p></a>`};
 const trilho=(titulo,arts,id)=>`<section class="prateleira" aria-labelledby="t-${id}"><div class="cab"><h2 id="t-${id}">${titulo}</h2><div class="setas"><button data-seta="-1" aria-label="Anterior: ${titulo}">‹</button><button data-seta="1" aria-label="Próximo: ${titulo}">›</button></div></div><div class="trilho" tabindex="0" role="region" aria-label="${titulo}">${arts.map(card).join('')}</div></section>`;
 
 function render(){
@@ -42,17 +42,34 @@ function aplicar(rolar){
 const dest=ARTIGOS.filter(a=>a.hero);
 $('#slides').innerHTML=dest.map((a,k)=>{const c=cat(a.cat);return `<article class="slide${k?'':' on'}" aria-roledescription="slide" aria-label="${k+1} de ${dest.length}"><img src="${img(a.hero)}-1600.webp" width="1600" height="900" alt="" ${k?'loading="lazy"':'fetchpriority="high"'}><div class="tx"><p class="cat">${c.nome}</p><h2>${a.titulo}</h2><p class="resumo">${a.resumo}</p><div class="acoes"><a class="btn cheio" href="#/artigo/${a.id}">Ler artigo</a>${btnSalvar(a.id)}</div></div></article>`}).join('');
 $('#pontos').innerHTML=dest.map((_,k)=>`<button aria-label="Destaque ${k+1}" aria-current="${k===0}"></button>`).join('');
-const slides=$$('.slide'),pts=$$('#pontos button'),hero=$('.hero');
-function ir(n){
+const slides=$('.slide'),pts=$('#pontos button'),hero=$('.hero'),faixaSlides=$('#slides');
+const modoMobile=matchMedia('(max-width:700px)');
+function ir(n,mover=true){
   atual=(n+slides.length)%slides.length;
   slides.forEach((s,k)=>{s.classList.toggle('on',k===atual);s.inert=k!==atual});
   pts.forEach((p,k)=>p.setAttribute('aria-current',k===atual));
+  if(modoMobile.matches&&mover)faixaSlides.scrollTo({left:atual*faixaSlides.clientWidth,behavior:reduz?'auto':'smooth'});
 }
 const pausa=()=>clearInterval(timer);
 const auto=()=>{pausa();if(!reduz&&slides.length>1)timer=setInterval(()=>ir(atual+1),8000)};
 pts.forEach((p,k)=>p.addEventListener('click',()=>{ir(k);auto()}));
 ['mouseenter','focusin'].forEach(e=>hero.addEventListener(e,pausa));
 ['mouseleave','focusout'].forEach(e=>hero.addEventListener(e,auto));
+
+let fimScroll;
+faixaSlides.addEventListener('scroll',()=>{
+  if(!modoMobile.matches)return;
+  pausa();
+  clearTimeout(fimScroll);
+  fimScroll=setTimeout(()=>{
+    const largura=Math.max(1,faixaSlides.clientWidth);
+    const n=Math.round(faixaSlides.scrollLeft/largura);
+    if(n!==atual)ir(n,false);
+    auto();
+  },100);
+},{passive:true});
+faixaSlides.addEventListener('pointerdown',()=>{if(modoMobile.matches)pausa()},{passive:true});
+modoMobile.addEventListener?.('change',()=>ir(atual));
 if(slides.length){ir(0);auto()}
 
 /* Assuntos */
