@@ -40,7 +40,7 @@ function aplicar(rolar){
 
 /* Destaques (hero) */
 const dest=ARTIGOS.filter(a=>a.hero);
-$('#slides').innerHTML=dest.map((a,k)=>{const c=cat(a.cat);return `<article class="slide${k?'':' on'}" aria-roledescription="slide" aria-label="${k+1} de ${dest.length}"><img src="${img(a.hero)}-1600.webp" width="1600" height="900" alt="" ${k?'loading="lazy"':'fetchpriority="high"'}><div class="tx"><p class="cat">${c.nome}</p><h2>${a.titulo}</h2><p class="resumo">${a.resumo}</p><div class="acoes"><a class="btn cheio" href="#/artigo/${a.id}">Ler artigo</a>${btnSalvar(a.id)}</div></div></article>`}).join('');
+$('#slides').innerHTML=dest.map((a,k)=>{const c=cat(a.cat);return `<article class="slide${k?'':' on'}" aria-roledescription="slide" aria-label="${k+1} de ${dest.length}"><img draggable="false" src="${img(a.hero)}-1600.webp" width="1600" height="900" alt="" ${k?'loading="lazy"':'fetchpriority="high"'}><div class="tx"><p class="cat">${c.nome}</p><h2>${a.titulo}</h2><p class="resumo">${a.resumo}</p><div class="acoes"><a class="btn cheio" href="#/artigo/${a.id}">Ler artigo</a>${btnSalvar(a.id)}</div></div></article>`}).join('');
 $('#pontos').innerHTML=dest.map((_,k)=>`<button aria-label="Destaque ${k+1}" aria-current="${k===0}"></button>`).join('');
 const slides=$$('.slide'),pts=$$('#pontos button'),hero=$('.hero'),faixaSlides=$('#slides');
 const modoMobile=matchMedia('(max-width:700px)');
@@ -48,7 +48,7 @@ function ir(n,mover=true){
   atual=(n+slides.length)%slides.length;
   slides.forEach((s,k)=>{s.classList.toggle('on',k===atual);s.inert=k!==atual});
   pts.forEach((p,k)=>p.setAttribute('aria-current',k===atual));
-  if(modoMobile.matches&&mover)faixaSlides.scrollTo({left:atual*faixaSlides.clientWidth,behavior:reduz?'auto':'smooth'});
+  if(mover)faixaSlides.scrollTo({left:atual*faixaSlides.clientWidth,behavior:reduz?'auto':'smooth'});
 }
 const pausa=()=>clearInterval(timer);
 const auto=()=>{pausa();if(!reduz&&slides.length>1)timer=setInterval(()=>ir(atual+1),8000)};
@@ -58,7 +58,6 @@ pts.forEach((p,k)=>p.addEventListener('click',()=>{ir(k);auto()}));
 
 let fimScroll;
 faixaSlides.addEventListener('scroll',()=>{
-  if(!modoMobile.matches)return;
   pausa();
   clearTimeout(fimScroll);
   fimScroll=setTimeout(()=>{
@@ -66,32 +65,40 @@ faixaSlides.addEventListener('scroll',()=>{
     const n=Math.round(faixaSlides.scrollLeft/largura);
     if(n!==atual)ir(n,false);
     auto();
-  },100);
+  },120);
 },{passive:true});
-faixaSlides.addEventListener('pointerdown',()=>{if(modoMobile.matches)pausa()},{passive:true});
 
-let inicioX=0,arrastando=false;
+let inicioX=0,inicioScroll=0,arrastando=false;
 faixaSlides.addEventListener('pointerdown',e=>{
   if(modoMobile.matches||e.button!==0||e.target.closest('a,button,input'))return;
   inicioX=e.clientX;
+  inicioScroll=faixaSlides.scrollLeft;
   arrastando=true;
   pausa();
   faixaSlides.classList.add('arrastando');
   faixaSlides.setPointerCapture?.(e.pointerId);
+  e.preventDefault();
+});
+faixaSlides.addEventListener('pointermove',e=>{
+  if(!arrastando||modoMobile.matches)return;
+  faixaSlides.scrollLeft=inicioScroll-(e.clientX-inicioX);
+  e.preventDefault();
 });
 faixaSlides.addEventListener('pointerup',e=>{
   if(!arrastando||modoMobile.matches)return;
-  const dx=e.clientX-inicioX;
   arrastando=false;
   faixaSlides.classList.remove('arrastando');
   faixaSlides.releasePointerCapture?.(e.pointerId);
-  if(Math.abs(dx)>=60)ir(atual+(dx<0?1:-1));
+  const largura=Math.max(1,faixaSlides.clientWidth);
+  ir(Math.round(faixaSlides.scrollLeft/largura));
   auto();
 });
 faixaSlides.addEventListener('pointercancel',()=>{
   if(!arrastando)return;
   arrastando=false;
   faixaSlides.classList.remove('arrastando');
+  const largura=Math.max(1,faixaSlides.clientWidth);
+  ir(Math.round(faixaSlides.scrollLeft/largura));
   auto();
 });
 modoMobile.addEventListener?.('change',()=>ir(atual));
