@@ -1,0 +1,44 @@
+LISTA DE IMAGENS NECESSÁRIAS PARA CLIO+
+=======================================
+
+Cada imagem precisa de DUAS versões em WebP (proporção 16:9):
+- Nome-1600.webp (1600 × 900 px)
+- Nome-640.webp (640 × 360 px)
+
+IMAGENS QUE JÁ ESTÃO NO PROJETO:
+================================
+✓ pre-historia-1600.webp + pre-historia-640.webp
+✓ europa-1600.webp + europa-640.webp
+✓ africa-1600.webp + africa-640.webp
+✓ asia-1600.webp + asia-640.webp
+✓ america-1600.webp + america-640.webp
+✓ teoria-1600.webp + teoria-640.webp
+✓ egito-1600.webp + egito-640.webp (imagem do artigo)
+✓ grecia-1600.webp + grecia-640.webp (imagem do artigo)
+
+IMAGENS QUE VOCÊ PRECISA FAZER UPLOAD:
+======================================
+1. oceania-1600.webp + oceania-640.webp
+2. brasil-1600.webp + brasil-640.webp
+3. eua-1600.webp + eua-640.webp
+4. urss-1600.webp + urss-640.webp
+5. historiografia-1600.webp + historiografia-640.webp
+
+TOTAL: 5 novas imagens (2 versões cada = 10 arquivos)
+
+ONDE COLOCAR:
+=============
+Na pasta → assets/img/
+
+COMO NOMEAR:
+============
+- Use apenas letras minúsculas, sem acentos
+- Use hífen para separar palavras
+- Termino obrigatório: "-1600.webp" e "-640.webp"
+
+EXEMPLOS:
+=========
+✓ oceania-1600.webp
+✓ oceania-640.webp
+✓ brasil-1600.webp
+✓ brasil-640.webp

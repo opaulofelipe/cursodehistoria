@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clio+ · Artigos de História</title>
+<meta name="description" content="Artigos de história organizados por assunto: da história antes da escrita à historiografia brasileira.">
+<meta name="theme-color" content="#14080f">
+<meta property="og:title" content="Clio+ · Artigos de História">
+<meta property="og:description" content="Artigos de história organizados por assunto.">
+<meta property="og:image" content="assets/img/egito-1600.webp">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%237a1f3d'/%3E%3Ctext x='16' y='23' font-size='18' text-anchor='middle' fill='%23f0a93b' font-family='sans-serif' font-weight='700'%3EC+%3C/text%3E%3C/svg%3E">
+<link rel="preload" as="image" href="assets/img/egito-1600.webp">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="topo" id="topo">
+  <a class="logo" href="#" aria-label="Clio+, início">Clio<span>+</span></a>
+  <nav aria-label="Principal">
+    <a href="#assuntos">Assuntos</a>
+    <a href="#trilhos">Artigos</a>
+  </nav>
+  <form class="busca" role="search">
+    <label class="sr" for="q">Buscar artigos</label>
+    <input id="q" type="search" placeholder="Buscar" autocomplete="off">
+  </form>
+</header>
+
+<main id="conteudo">
+  <h1 class="sr">Clio+: artigos de história</h1>
+  <section class="hero" aria-roledescription="carrossel" aria-label="Destaques">
+    <div class="slides" id="slides"></div>
+    <div class="pontos" id="pontos"></div>
+  </section>
+
+  <section id="assuntos" aria-labelledby="h-assuntos">
+    <h2 id="h-assuntos">Assuntos</h2>
+    <div class="trilho tiles" id="tiles" tabindex="0" role="region" aria-label="Lista de assuntos"></div>
+  </section>
+
+  <div id="trilhos"></div>
+  <noscript><p class="vazio">Ative o JavaScript para navegar pelos artigos.</p></noscript>
+</main>
+
+<footer>
+  <p>Clio+ · Artigos de história organizados por assunto.</p>
+</footer>
+
+<dialog id="leitor" aria-labelledby="l-titulo"></dialog>
+
+<script src="js/dados.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
