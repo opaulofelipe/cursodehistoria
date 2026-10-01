@@ -42,7 +42,7 @@ function aplicar(rolar){
 const dest=ARTIGOS.filter(a=>a.hero);
 $('#slides').innerHTML=dest.map((a,k)=>{const c=cat(a.cat);return `<article class="slide${k?'':' on'}" aria-roledescription="slide" aria-label="${k+1} de ${dest.length}"><img src="${img(a.hero)}-1600.webp" width="1600" height="900" alt="" ${k?'loading="lazy"':'fetchpriority="high"'}><div class="tx"><p class="cat">${c.nome}</p><h2>${a.titulo}</h2><p class="resumo">${a.resumo}</p><div class="acoes"><a class="btn cheio" href="#/artigo/${a.id}">Ler artigo</a>${btnSalvar(a.id)}</div></div></article>`}).join('');
 $('#pontos').innerHTML=dest.map((_,k)=>`<button aria-label="Destaque ${k+1}" aria-current="${k===0}"></button>`).join('');
-const slides=$('.slide'),pts=$('#pontos button'),hero=$('.hero'),faixaSlides=$('#slides');
+const slides=$$('.slide'),pts=$$('#pontos button'),hero=$('.hero'),faixaSlides=$('#slides');
 const modoMobile=matchMedia('(max-width:700px)');
 function ir(n,mover=true){
   atual=(n+slides.length)%slides.length;
